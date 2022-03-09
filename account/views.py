@@ -29,7 +29,6 @@ class LoginView(generics.GenericAPIView):
     email = request.data.get('email')
     password = request.data.get('password')
     user = User.objects.filter(Q(email = email) | Q(username = email)).first()
-    print(user)
     if user is None:
       raise AuthenticationFailed({
         'error' : {
@@ -45,8 +44,12 @@ class LoginView(generics.GenericAPIView):
     
     token = RefreshToken.for_user(user)
     serialize = RegisterSerializer(user)
-    return Response({
+
+    res = Response({
       'user': serialize.data,
       'token': str(token.access_token)
     })
+
+    res.set_cookie( key="token", value=str(token.access_token), httponly=True)
+    return res
 
