@@ -22,7 +22,6 @@ class RegisterSerializer(serializers.ModelSerializer):
       }
     }
   def create(self, validated_data):
-    print('hello password', validated_data)
     password = validated_data.pop('password')
     instance = self.Meta.model(**validated_data)
     if password is not None:
@@ -30,3 +29,12 @@ class RegisterSerializer(serializers.ModelSerializer):
       instance.save()
 
     return instance
+
+
+class LoginSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = User
+    fields = [
+      'email',
+      'password',
+    ]
