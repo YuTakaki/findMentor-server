@@ -16,23 +16,26 @@ class RegisterView(generics.GenericAPIView):
     serializer.is_valid(raise_exception=True)
     user = serializer.save()
     token = RefreshToken.for_user(user)
-    return Response({
+    res = Response({
       'user': serializer.data,
       'token': str(token.access_token),
     })
+
+    res.set_cookie( key="token", value=str(token.access_token), httponly=True)
+    return res
 
 class LoginView(generics.GenericAPIView):
   serializer_class = LoginSerializer
   queryset = User.objects.none()
 
   def post(self, request):
-    email = request.data.get('email')
+    email = request.data.get('usernameOrEmail')
     password = request.data.get('password')
     user = User.objects.filter(Q(email = email) | Q(username = email)).first()
     if user is None:
       raise AuthenticationFailed({
         'error' : {
-          'email' : 'account does not exist'
+          'usernameOrEmail' : 'account does not exist'
         }
       })
     if not user.check_password(password):
