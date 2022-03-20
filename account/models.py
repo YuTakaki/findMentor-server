@@ -12,6 +12,8 @@ class User(AbstractUser):
   first_name = models.CharField(max_length=100)
   last_name = models.CharField(max_length=200)
   date_joined = models.DateTimeField(auto_now=True)
+  job_position = models.CharField(max_length=100, null=True)
+  pay_rate = models.IntegerField(null=True)
 
   def __str__(self):
       return self.username
