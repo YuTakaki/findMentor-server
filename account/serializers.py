@@ -12,6 +12,8 @@ class RegisterSerializer(serializers.ModelSerializer):
       'last_name',
       'email',
       'account_type',
+      'job_position',
+      'pay_rate'
     ]
     extra_kwargs = {
       "id": {
@@ -19,6 +21,12 @@ class RegisterSerializer(serializers.ModelSerializer):
       },
       "password" : {
         "write_only" : True,
+      },
+      "job_position" : {
+        "read_only" : True,
+      },
+      "pay_rate" : {
+        "read_only" : True,
       }
     }
   def create(self, validated_data):
