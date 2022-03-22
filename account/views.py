@@ -56,3 +56,8 @@ class LoginView(generics.GenericAPIView):
     res.set_cookie( key="token", value=str(token.access_token), httponly=True)
     return res
 
+class VerifyTokenView(generics.GenericAPIView):
+  serializer_class = RegisterSerializer
+
+  def get(self, request):
+    return Response(True)
