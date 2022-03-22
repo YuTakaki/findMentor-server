@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, permissions
 from django.db.models import Q
 from .models import User
 from .serializers import LoginSerializer, RegisterSerializer
@@ -9,6 +9,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 # Create your views here.
 class RegisterView(generics.GenericAPIView):
   serializer_class = RegisterSerializer
+  permission_classes = [
+    permissions.AllowAny
+  ]
   queryset = User.objects.none()
 
   def post(self, request):
@@ -27,6 +30,9 @@ class RegisterView(generics.GenericAPIView):
 class LoginView(generics.GenericAPIView):
   serializer_class = LoginSerializer
   queryset = User.objects.none()
+  permission_classes = [
+    permissions.AllowAny
+  ]
 
   def post(self, request):
     email = request.data.get('usernameOrEmail')
@@ -60,4 +66,5 @@ class VerifyTokenView(generics.GenericAPIView):
   serializer_class = RegisterSerializer
 
   def get(self, request):
+    print(request.user)
     return Response(True)
