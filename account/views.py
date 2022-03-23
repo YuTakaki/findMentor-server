@@ -66,5 +66,7 @@ class VerifyTokenView(generics.GenericAPIView):
   serializer_class = RegisterSerializer
 
   def get(self, request):
-    print(request.user)
-    return Response(True)
+    serialize_user = self.get_serializer(request.user)
+    return Response({
+      'user': serialize_user.data
+    })
