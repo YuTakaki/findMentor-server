@@ -1,10 +1,13 @@
 from rest_framework import generics, permissions
 from django.db.models import Q
+
+from skills.models import Skills
 from .models import User
-from .serializers import LoginSerializer, RegisterSerializer
+from .serializers import LoginSerializer, RegisterSerializer, UserInformationSerializer
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import status
 
 # Create your views here.
 class RegisterView(generics.GenericAPIView):
@@ -68,10 +71,38 @@ class VerifyTokenView(generics.GenericAPIView):
   def get(self, request):
     serialize_user = self.get_serializer(request.user)
     if serialize_user.data.get('account_type') == 'mentor':
-      print(serialize_user.data.get('job_position'))
+      skills = Skills.objects.filter(user=serialize_user.data.get('id'))
+      error = None
+      if serialize_user.data.get('job_position') is None:
+        error = 0
+      elif len(skills):
+        error = 1
+      elif serialize_user.data.get('pay_rate') is None:
+        error = 2
       data = serialize_user.data
-    else:
-      data = serialize_user.data
+      return Response({
+        'user': data,
+        'error': error
+      })
+    data = serialize_user.data
     return Response({
       'user': data
+    })
+
+class UserInformationView(generics.GenericAPIView):
+  serializer_class = UserInformationSerializer
+  permission_classes = [
+    permissions.AllowAny
+  ]
+  def post(self, request):
+    # user = request.user
+    user = request.user
+    user.job_position = request.data.get('job_position')
+    user.profile_img = request.data.get('profile_img')
+    user.bio = request.data.get('bio')
+    user.save()
+    serializer = RegisterSerializer(user)
+
+    return Response({
+      'user' : serializer.data
     })

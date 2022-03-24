@@ -13,7 +13,9 @@ class RegisterSerializer(serializers.ModelSerializer):
       'email',
       'account_type',
       'job_position',
-      'pay_rate'
+      'pay_rate',
+      'bio',
+      'profile_img'
     ]
     extra_kwargs = {
       "id": {
@@ -26,6 +28,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         "read_only" : True,
       },
       "pay_rate" : {
+        "read_only" : True,
+      },
+      "bio" : {
+        "read_only" : True,
+      },
+      "profile_img" : {
         "read_only" : True,
       }
     }
@@ -45,4 +53,13 @@ class LoginSerializer(serializers.ModelSerializer):
     fields = [
       'email',
       'password',
+    ]
+
+class UserInformationSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = User
+    fields = [
+      'job_position',
+      'profile_img',
+      'bio',
     ]
