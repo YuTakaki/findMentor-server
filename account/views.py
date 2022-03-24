@@ -67,6 +67,11 @@ class VerifyTokenView(generics.GenericAPIView):
 
   def get(self, request):
     serialize_user = self.get_serializer(request.user)
+    if serialize_user.data.get('account_type') == 'mentor':
+      print(serialize_user.data.get('job_position'))
+      data = serialize_user.data
+    else:
+      data = serialize_user.data
     return Response({
-      'user': serialize_user.data
+      'user': data
     })
