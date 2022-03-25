@@ -92,9 +92,6 @@ class VerifyTokenView(generics.GenericAPIView):
 
 class UserInformationView(generics.GenericAPIView):
   serializer_class = UserInformationSerializer
-  permission_classes = [
-    permissions.AllowAny
-  ]
   def post(self, request):
     # user = request.user
     user = request.user
@@ -106,6 +103,19 @@ class UserInformationView(generics.GenericAPIView):
     user.save()
     serializer = RegisterSerializer(user)
 
+    return Response({
+      'user' : serializer.data
+    })
+
+class UserSkillsView(generics.GenericAPIView):
+  serializer_class = UserInformationSerializer
+  def post(self, request):
+    user = request.user
+    Skills.objects.filter(user=user).delete()
+    for language in request.data:
+      skill = Skills(user=user, skill=language)
+      skill.save()
+    serializer = RegisterSerializer(user)
     return Response({
       'user' : serializer.data
     })
