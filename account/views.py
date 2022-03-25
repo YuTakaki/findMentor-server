@@ -75,7 +75,7 @@ class VerifyTokenView(generics.GenericAPIView):
       error = None
       if serialize_user.data.get('job_position') is None:
         error = 0
-      elif len(skills):
+      elif len(skills) == 0:
         error = 1
       elif serialize_user.data.get('pay_rate') is None:
         error = 2
