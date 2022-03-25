@@ -1,3 +1,4 @@
+import os
 from rest_framework import generics, permissions
 from django.db.models import Q
 
@@ -98,7 +99,9 @@ class UserInformationView(generics.GenericAPIView):
     # user = request.user
     user = request.user
     user.job_position = request.data.get('job_position')
-    user.profile_img = request.data.get('profile_img')
+    profile_img = request.data.get('profile_img')
+    if not isinstance(profile_img, str):
+      user.profile_img = profile_img
     user.bio = request.data.get('bio')
     user.save()
     serializer = RegisterSerializer(user)
