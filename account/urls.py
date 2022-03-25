@@ -6,5 +6,4 @@ urlpatterns = [
     path('login', views.LoginView.as_view()),
     path('verify', views.VerifyTokenView.as_view()),
     path('additional', views.UserInformationView.as_view()),
-    path('skills', views.UserSkillsView.as_view()),
 ]

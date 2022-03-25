@@ -106,16 +106,3 @@ class UserInformationView(generics.GenericAPIView):
     return Response({
       'user' : serializer.data
     })
-
-class UserSkillsView(generics.GenericAPIView):
-  serializer_class = UserInformationSerializer
-  def post(self, request):
-    user = request.user
-    Skills.objects.filter(user=user).delete()
-    for language in request.data:
-      skill = Skills(user=user, skill=language)
-      skill.save()
-    serializer = RegisterSerializer(user)
-    return Response({
-      'user' : serializer.data
-    })
