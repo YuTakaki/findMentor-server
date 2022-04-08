@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'account.apps.AccountConfig',
     'skills.apps.SkillsConfig',
+    'mentor_schedule.apps.MentorScheduleConfig',
 ]
 
 MIDDLEWARE = [
