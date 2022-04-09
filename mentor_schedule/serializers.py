@@ -8,5 +8,8 @@ class MentorScheduleSerializer(serializers.ModelSerializer):
     extra_kwargs = {
       'id' : {
         'read_only': True
+      },
+      'user' : {
+        'read_only': True
       }
     }
