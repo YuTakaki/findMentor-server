@@ -9,8 +9,10 @@ from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
+from rest_framework.decorators import api_view
 
-# Create your views here.
+
+
 class RegisterView(generics.GenericAPIView):
   serializer_class = RegisterSerializer
   permission_classes = [
@@ -122,3 +124,10 @@ class UserInformationView(generics.GenericAPIView):
       'user' : serializer.data,
       'error' : error
     })
+
+
+@api_view(['POST'])
+def logoutView(request):
+  res = Response()
+  res.set_cookie( key="token", value="", httponly=True)
+  return res
