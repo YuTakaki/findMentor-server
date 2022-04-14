@@ -5,7 +5,7 @@ from account.models import User
 
 # Create your models here.
 class MentorSchedule(models.Model):
-  id = models.UUIDField(primary_key= True, default= uuid.uuid4, editable=False, max_length = 32)
+  id = models.IntegerField(primary_key=True)
   title = models.CharField(max_length=100, null=True)
   allDay = models.BooleanField()
   endDate = models.DateTimeField()

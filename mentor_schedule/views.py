@@ -14,7 +14,9 @@ class MentorScheduleView(generics.GenericAPIView):
     return Response(serialize.data)
   
   def post(self, request):
-    serialize = self.get_serializer(data=request.data)
-    serialize.is_valid(raise_exception=True)
-    serialize.save(user=request.user)
-    return Response(serialize.data)
+    MentorSchedule.objects.filter(user=request.user).delete()
+    for data in request.data:
+      serialize = self.get_serializer(data=data)
+      serialize.is_valid(raise_exception=True)
+      serialize.save(user=request.user)
+    return Response(True)
