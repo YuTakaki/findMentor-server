@@ -5,12 +5,23 @@ from account.models import User
 from .serializers import MentorSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.db.models import Q
+from django.db.models.functions import Concat
+from django.db.models import Value
 # Create your views here.
 class MentorView(generics.GenericAPIView):
   serializer_class = MentorSerializer
-
+  
   def get(self, request):
-    mentors = User.objects.filter(account_type='mentor')
+    q = request.query_params.get('q')
+    if q is not None:
+      q_array = q.split(' ')
+      print(q_array)
+      mentors = User.objects.annotate(
+        search=Concat('first_name', Value(' '), 'last_name')).filter(Q(account_type= 'mentor') &
+       (Q(search__icontains = q) | Q(skills__skill = q) | Q(username__icontains = q) | Q(skills__skill__in = q_array))).distinct()
+    else:
+      mentors = User.objects.filter(account_type='mentor')
     serialize = self.get_serializer(mentors, many=True)
     return Response({
       'mentors': serialize.data
