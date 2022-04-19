@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'skills.apps.SkillsConfig',
     'mentor_schedule.apps.MentorScheduleConfig',
+    'mentor.apps.MentorConfig',
 ]
 
 MIDDLEWARE = [
