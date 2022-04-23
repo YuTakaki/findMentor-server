@@ -3,5 +3,6 @@ from . import views
 
 urlpatterns = [
   path('', views.MentorView.as_view()),
-  path('filter', views.filterMentorView)
+  path('<str:pk>', views.getMentorView),
+  path('filter', views.filterMentorView),
 ]
