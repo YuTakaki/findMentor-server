@@ -31,7 +31,6 @@ class MentorView(generics.GenericAPIView):
 def getMentorView(request, pk):
   mentor = User.objects.filter(id=pk).first()
   serialize = MentorSerializer(mentor)
-  print(mentor)
   return Response(serialize.data)
 
 

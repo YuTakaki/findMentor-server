@@ -22,7 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/auth/', include('account.urls')),
     path('api/skills/', include('skills.urls')),
+    path('api/mentor/schedule/', include('mentor_schedule.urls')),
     path('api/mentor/', include('mentor.urls')),
-    path('api/mentor/schedule', include('mentor_schedule.urls')),
+    
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
