@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     path('', views.MentorScheduleView.as_view()),
-    path('<str:pk>', views.mentorScheduleByIdView)
+    path('<str:pk>/', views.mentorScheduleByIdView),
 ]
