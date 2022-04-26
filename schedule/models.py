@@ -1,10 +1,10 @@
 from django.db import models
 from account.models import User
 from django.db.models.deletion import CASCADE
-from mentor_schedule.models import MentorSchedule
 
 # Create your models here.
 class Schedule(models.Model):
+  id = models.AutoField(primary_key=True)
   startDate = models.DateTimeField()
   endDate = models.DateTimeField()
   mentor = models.ForeignKey(User, related_name='mentor', on_delete=CASCADE)
