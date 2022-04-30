@@ -1,7 +1,6 @@
 import os
 from rest_framework import generics, permissions
 from django.db.models import Q
-
 from skills.models import Skills
 from .models import User
 from .serializers import LoginSerializer, RegisterSerializer, UserInformationSerializer

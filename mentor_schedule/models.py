@@ -10,6 +10,7 @@ class MentorSchedule(models.Model):
   allDay = models.BooleanField()
   endDate = models.DateTimeField()
   rRule = models.CharField(max_length=100, null=True)
+  exDate = models.TextField(null=True)
   startDate = models.DateTimeField()
   notes = models.TextField(null=True)
   user = models.ForeignKey(User, related_name='mentor_schedule', on_delete=CASCADE)
